@@ -36,7 +36,7 @@
 
 - `origin` → `tonydeng/system_prompts_leaks`（个人 fork）
 - `upstream` → `asgeirtj/system_prompts_leaks`（上游原仓库）
-- 主分支：`main`，直接在 `main` 工作（纯内容仓库，无需 worktree 隔离）
+- 主分支：`main`，**main 只接收合并，不在 main 上直接开发**（见下文 Worktree 工作约定）
 - PR 目标：上游 `asgeirtj/system_prompts_leaks`
 - **`.gitignore`**：已配置，忽略 `.omo/`（OpenCode 会话元数据）、编辑器/IDE 临时文件、OS 垃圾文件。**注意：`.handoff/` 不被忽略**（见下文跨会话交接章节，须纳入版本控制）。
 
@@ -124,4 +124,8 @@
 
 - **图片资源**：`.github/banner-dark.png` / `banner-light.png` 用于 README 明暗主题切换。新增图片资源放 `.github/`。
 - **LICENSE**：仓库有 LICENSE 文件；泄露的系统提示词版权归各厂商，本仓库为归档目的收录。
-- **无 worktree 约定**：纯内容仓库，直接在 `main` 分支工作即可。
+- **Worktree 工作约定**：所有实际开发（翻译、修复、批量生成等）**必须在独立 worktree 中进行**，不直接在 main 工作区操作。
+  - **main 保持干净**：main 分支只通过合并 worktree 分支更新，不接受直接提交（紧急小修复除外）。
+  - **worktree 位置与命名**：放在仓库同级目录，命名 `../spl-<task>`，如 `../spl-anthropic-fix`、`../spl-openai-translate`。
+  - **工作流**：`git worktree add ../spl-<task> -b <task>` → 在 worktree 中完成工作并提交 → 切回 main 合并 → `git worktree remove ../spl-<task>`。
+  - **`.handoff/` 同步**：`.handoff/current.md` 已纳入版本控制，worktree 从 main checkout 时自动获取；在 worktree 中更新后合并回 main 即可同步。
