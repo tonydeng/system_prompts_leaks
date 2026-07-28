@@ -4,7 +4,7 @@
 
 ## Files API（Beta）
 
-位于 `client.Beta.Files` 下。方法是 **`Upload`**（不是 `New`/`Create`），参数结构体是 `BetaFileUploadParams`。`File` 字段接受 `io.Reader`；使用 `anthropic.File()` 为 multipart 编码附加文件名 + content-type。
+位于 `client.Beta.Files` 下。方法是 **`Upload`**（不是 `New`/`Create`），参数结构体为 `BetaFileUploadParams`。`File` 字段接受 `io.Reader`；使用 `anthropic.File()` 附加文件名 + content-type 用于 multipart 编码。
 
 ```go
 f, _ := os.Open("./upload_me.txt")

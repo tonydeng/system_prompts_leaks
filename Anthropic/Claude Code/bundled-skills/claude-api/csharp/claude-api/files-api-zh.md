@@ -13,7 +13,7 @@ using Anthropic.Models.Beta.Messages;
 FileMetadata meta = await client.Beta.Files.Upload(
     new FileUploadParams { File = File.OpenRead("doc.pdf") });
 
-// 引用上传的文件需要 Beta 消息类型：
+// 引用已上传的文件需要 Beta 消息类型：
 new BetaRequestDocumentBlock {
     Source = new BetaFileDocumentSource { FileID = meta.ID },
 }

@@ -2,7 +2,7 @@
 
 # 读取 PDF
 
-在 run_script 中读取 PDF，使用 pdf-parse 的浏览器构建（锁定 @2.4.5）：
+在 run_script 中读取 PDF，使用浏览器版本的 pdf-parse（锁定 @2.4.5）：
 
 ```js
 const { PDFParse } = await import('https://cdn.jsdelivr.net/npm/pdf-parse@2.4.5/dist/pdf-parse/web/pdf-parse.es.js');

@@ -4,7 +4,7 @@
 
 ## 流式输出
 
-> **需要 SDK v0.5.0+。** v0.4.0 及更早版本使用单一 `$params` 数组；用命名参数调用会抛 `Unknown named parameter $model`。升级：`composer require "anthropic-ai/sdk:^0.7"`
+> **需要 SDK v0.5.0+。** v0.4.0 及更早版本使用单个 `$params` 数组；以命名参数调用会抛出 `Unknown named parameter $model`。升级：`composer require "anthropic-ai/sdk:^0.7"`
 
 ```php
 use Anthropic\Messages\RawContentBlockDeltaEvent;

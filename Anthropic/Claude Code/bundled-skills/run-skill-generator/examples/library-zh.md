@@ -2,19 +2,19 @@
 
 # 示例：库 / SDK
 
-库在流程意义上没有"运行"步骤 — 没有服务器要启动，没有 CLI 要调用。对于库，run skill 是关于：
+库没有进程意义上的"运行"步骤——没有服务器要启动，没有 CLI 要调用。对库而言，运行技能关注：
 
-1. 从源代码**构建**库
+1. 从源码**构建**库
 2. **运行测试套件**
-3. **最小工作示例**，它练习库并证明它已正确安装
+3. 一个练习库并证明其已正确安装的**最小工作示例**
 
-保持简短。模板的构建和测试部分完成大部分工作。
+保持简短。模板的 Build 和 Test 部分承担大部分工作。
 
 ## 冒烟测试示例
 
-主要的库特定添加是一个小程序（或 REPL 片段），它导入库并做一件真实的事情。这就是智能体确认"是的，库可用"的方式：
+主要的库特定补充是一个小程序（或 REPL 片段），导入库并做一件真实的事。这是智能体确认"是的，库可用"的方式：
 
-> ## 验证
+> ## Verify
 >
 > ```bash
 > python -c '
@@ -25,7 +25,7 @@
 > # → pong
 > ```
 
-或者对于编译语言：
+或对于编译型语言：
 
 > ```bash
 > cat > /tmp/smoke.go <<GO
@@ -44,30 +44,30 @@
 > description: Build, install, and test mylib from source. Use when asked to verify mylib works, run its tests, or build a distribution.
 > ---
 >
-> `mylib` 是一个 Python 库 — "运行"它意味着从源代码构建并执行测试套件。
+> `mylib` 是一个 Python 库——"运行"它意味着从源码构建并执行测试套件。
 >
-> ## 设置
+> ## Setup
 >
 > ```bash
 > pip install -e '.[dev]'
 > ```
 >
-> ## 验证
+> ## Verify
 >
 > ```bash
 > python -c 'import mylib; print(mylib.__version__)'
 > # → 2.1.0
 > ```
 >
-> ## 测试
+> ## Test
 >
 > ```bash
 > pytest
 > ```
 >
-> 测试子集：`pytest tests/unit/`。带覆盖率：`pytest --cov=mylib`。
+> Subset of tests: `pytest tests/unit/`. With coverage: `pytest --cov=mylib`.
 >
-> ## 构建（分发）
+> ## Build (distribution)
 >
 > ```bash
 > pip install build
@@ -75,8 +75,8 @@
 > # → dist/mylib-2.1.0-py3-none-any.whl
 > ```
 
-## 值得文档化的事情
+## 需要考虑记录的事项
 
-- **开发模式与安装模式。** `pip install -e .` 与 `pip install .` — 如果行为不同，说明何时使用哪个。
-- **可选依赖。** `[dev]`、`[test]`、`[docs]` extras 以及何时需要每个。
-- **生成的代码。**如果有代码生成步骤（protobuf、OpenAPI 客户端），文档化它 — 它几乎总是从 README 中缺失。
+- **开发模式 vs 安装模式。** `pip install -e .` vs `pip install .`——若行为不同，说明各自用途。
+- **可选依赖。** `[dev]`、`[test]`、`[docs]` extras 及各自何时需要。
+- **生成代码。** 若有代码生成步骤（protobuf、OpenAPI 客户端），记录它——它几乎总是从 README 中缺失。
