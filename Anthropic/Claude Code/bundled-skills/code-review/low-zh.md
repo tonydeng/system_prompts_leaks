@@ -1,15 +1,18 @@
 > **说明**：本文件为英文原文（`low.md`）的中文译注版，辅助理解。英文原文为权威来源，任何冲突以原文为准。占位符（如 `{model_name}`）保持原样不译。
 
-`low effort → 1 diff pass → no verify → ≤4 findings`
+`低工作量 → 1 次 diff 扫描 → 不验证 → ≤4 条发现`
 
-## 回合 1 — 读取
+## 第 1 回合 — 读取
 
-一次工具调用：读取统一 diff（`git diff @{upstream}...HEAD; git diff HEAD` 以覆盖已提交和未提交的更改，或 `git diff main...HEAD` / 作为参数传递的目标）。跳过测试/fixture hunk（`test/`、`spec/`、`__tests__/`、`*_test.*`、`*.test.*`、`fixtures/`、`testdata/`）——在此级别不审查测试文件更改。无子代理，无完整文件读取。
+一次工具调用：读取统一 diff（`git diff @{upstream}...HEAD; git diff HEAD` 覆盖已提交和未提交变更，或 `git diff main...HEAD` / 作为参数传入的目标）。跳过测试/fixture 代码块（`test/`、`spec/`、`__tests__/`、`*_test.*`、`*.test.*`、`fixtures/`、`testdata/`）——此级别不审查测试文件变更。无子智能体，无完整文件读取。
 
-## 回合 2 — 发现
+## 第 2 回合 — 发现
 
-标记仅从 hunk 可见的运行时正确性 bug：倒置/错误的条件、差一错误、相邻行显示值可能为空的 null/undefined 解引用、被移除的守卫、假值零检查、缺失的 `await`、错误的变量复制粘贴、应该传播但在 catch 中被吞掉的错误。还要标记——仍然仅从 hunk——复制 diff 上下文中可见的现有辅助函数的新代码，以及 diff 遗留的死代码。
+标记仅从代码块可见的运行时正确性 bug：反转/错误条件、差一错误、空/未定义解引用（相邻行显示值可能缺失）、移除的守卫、假值零检查、缺失 `await`、错误变量复制粘贴、应在传播的 catch 中被吞掉的错误。
 
-**不要**标记风格、命名、性能、缺失测试，或 hunk 之外的任何内容。
+也标记——仍仅从代码块——diff 上下文中可见的、复制已有辅助函数的新代码，以及 diff 遗留的死代码。
 
-输出最多 **4 个发现**，最严重优先，每个一行：`path/to/file.ext:123 — what's wrong and the concrete failure`。如果没有符合条件的，准确输出 `(none)`。
+**不要**标记风格、命名、性能、缺失测试或代码块之外的任何内容。
+
+输出最多 **4 条发现**，最严重的在前，每条一行：
+`path/to/file.ext:123 — 问题是什么及具体失败`。若无符合条件的内容，输出恰好 `(none)`。

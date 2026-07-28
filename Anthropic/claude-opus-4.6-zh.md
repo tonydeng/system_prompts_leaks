@@ -2176,3 +2176,503 @@ Google Place ID。如果提供，后端获取完整详情。
               "transit",
               "bicycling"
             ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Travel Mode"
+      }
+    },
+    "title": "DisplayMapParams",
+    "type": "object"
+  }
+}
+```
+## places_search
+
+使用 Google Places 搜索地点、商家、餐厅和景点。
+
+支持在单次调用中使用多个查询。多个查询可用于：
+- 高效行程规划
+- 分解宽泛或抽象请求：'距离伦敦 1 小时的最佳酒店' 不能很好地转化为直接查询。可以分解为：'Oxfordshire 豪华酒店'、'Cotswolds 豪华酒店'、'North Downs 豪华酒店'等。
+
+用法：
+```yaml
+{
+  "queries": [
+    {
+      "query": "temples in Asakusa",
+      "max_results": 3
+    },
+    {
+      "query": "ramen restaurants in Tokyo",
+      "max_results": 3
+    },
+    {
+      "query": "coffee shops in Shibuya",
+      "max_results": 2
+    }
+  ]
+}
+```
+
+每个查询可以指定 max_results（1-10，默认 5）。
+结果在查询之间去重。
+对于常见的地点名称，确保包含更广泛的区域，如 restaurants Chelsea, London（以区别于纽约的 Chelsea）。
+
+返回：地点数组，包含 place_id、名称、地址、坐标、评分、照片、营业时间和其他详情。重要：通过 places_map_display_v0 工具（首选）或文本向用户显示结果。不相关的结果可以忽略，用户不会看到它们。
+
+地点搜索工具的输入参数。
+
+支持在单次调用中使用多个查询以进行高效行程规划。
+
+**`location_bias_lat`** (`number | null`)
+
+可选的纬度坐标，用于将结果偏向特定区域
+
+**`location_bias_lng`** (`number | null`)
+
+可选的经度坐标，用于将结果偏向特定区域
+
+**`location_bias_radius`** (`number | null`)
+
+可选的位置偏向半径（米），如果提供了纬度/经度则默认 5000
+
+**`queries`** (`array`, required)
+
+搜索查询列表（1-10 个查询）。每个查询可以指定自己的 max_results。
+
+**`SearchQuery`** (`object`)
+
+多查询请求中的单个搜索查询。
+
+**`SearchQuery.max_results`** (`integer`)
+
+此查询的最大结果数（1-10，默认 5）
+
+**`SearchQuery.query`** (`string`, required)
+
+自然语言搜索查询（如'temples in Asakusa'、'ramen restaurants in Tokyo'）
+
+```yaml
+{
+  "name": "places_search",
+  "parameters": {
+    "$defs": {
+      "SearchQuery": {
+        "additionalProperties": false,
+        "properties": {
+          "max_results": {
+            "maximum": 10,
+            "minimum": 1,
+            "title": "Max Results",
+            "type": "integer"
+          },
+          "query": {
+            "title": "Query",
+            "type": "string"
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "title": "SearchQuery",
+        "type": "object"
+      }
+    },
+    "additionalProperties": false,
+    "properties": {
+      "location_bias_lat": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Location Bias Lat"
+      },
+      "location_bias_lng": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Location Bias Lng"
+      },
+      "location_bias_radius": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Location Bias Radius"
+      },
+      "queries": {
+        "items": {
+          "$ref": "#/$defs/SearchQuery"
+        },
+        "maxItems": 10,
+        "minItems": 1,
+        "title": "Queries",
+        "type": "array"
+      }
+    },
+    "required": [
+      "queries"
+    ],
+    "title": "PlacesSearchParams",
+    "type": "object"
+  }
+}
+```
+## present_files
+
+present_files 工具使文件对用户可见，可在客户端界面中查看和渲染。
+
+何时使用 present_files 工具：
+- 使任何文件可供用户查看、下载或交互
+- 一次呈现多个相关文件
+- 在创建应呈现给用户的文件之后
+
+何时不使用 present_files 工具：
+- 当你仅需读取文件内容供自己处理时
+- 用于不打算让用户查看的临时或中间文件
+
+工作原理：
+- 接受来自容器文件系统的文件路径数组
+- 返回客户端可访问文件的输出路径
+- 输出路径的顺序与输入文件路径相同
+- 可以在单次调用中高效呈现多个文件
+- 如果文件不在输出目录中，将自动复制到该目录
+- 传入 present_files 工具的第一个输入路径（因此也是返回的第一个输出路径）应对应于用户最需要首先查看的文件
+
+**`filepaths`** (`array`, required)
+
+标识要呈现给用户的文件路径数组
+
+```yaml
+{
+  "name": "present_files",
+  "parameters": {
+    "additionalProperties": false,
+    "properties": {
+      "filepaths": {
+        "items": {
+          "type": "string"
+        },
+        "minItems": 1,
+        "title": "Filepaths",
+        "type": "array"
+      }
+    },
+    "required": [
+      "filepaths"
+    ],
+    "title": "PresentFilesInputSchema",
+    "type": "object"
+  }
+}
+```
+## recent_chats
+
+检索最近的聊天对话，支持自定义排序（按时间顺序或逆序），可选使用'before'和'after'日期时间过滤器进行分页，以及项目过滤
+
+**`after`** (`string | null`, default: `null`)
+
+返回在此日期时间之后更新的聊天（ISO 格式，用于基于游标的分页）
+
+**`before`** (`string | null`, default: `null`)
+
+返回在此日期时间之前更新的聊天（ISO 格式，用于基于游标的分页）
+
+**`n`** (`integer`, default: `3`)
+
+返回的最近聊天数量，1-20 之间
+
+**`sort_order`** (`string`, default: `"desc"`)
+
+结果排序顺序：'asc' 为按时间顺序，'desc' 为逆序（默认）
+
+```yaml
+{
+  "name": "recent_chats",
+  "parameters": {
+    "properties": {
+      "after": {
+        "anyOf": [
+          {
+            "format": "date-time",
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "After"
+      },
+      "before": {
+        "anyOf": [
+          {
+            "format": "date-time",
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Before"
+      },
+      "n": {
+        "default": 3,
+        "exclusiveMinimum": 0,
+        "maximum": 20,
+        "title": "N",
+        "type": "integer"
+      },
+      "sort_order": {
+        "default": "desc",
+        "pattern": "^(asc|desc)$",
+        "title": "Sort Order",
+        "type": "string"
+      }
+    },
+    "title": "GetRecentChatsInput",
+    "type": "object"
+  }
+}
+```
+## recipe_display_v0
+
+显示带有可调份数的交互式食谱。当用户要求食谱、烹饪说明或食物准备指南时使用。该小部件允许用户通过调整份数控件按比例缩放所有配料用量。
+
+食谱小部件工具的输入参数。
+
+**`base_servings`** (`integer | null`)
+
+此食谱在基础用量下的份数（默认：4）
+
+**`description`** (`string | null`)
+
+食谱的简要描述或标语
+
+**`ingredients`** (`array`, required)
+
+带用量的配料列表
+
+**`notes`** (`string | null`)
+
+关于食谱的可选提示、变体或额外说明
+
+**`steps`** (`array`, required)
+
+烹饪说明。使用 {ingredient_id} 语法引用配料。
+
+**`title`** (`string`, required)
+
+食谱名称（如'Spaghetti alla Carbonara'）
+
+**`RecipeIngredient`** (`object`)
+
+食谱中的单个配料。
+
+**`RecipeIngredient.amount`** (`number`, required)
+
+base_servings 的数量
+
+**`RecipeIngredient.id`** (`string`, required)
+
+此配料的 4 字符唯一标识符（如'0001'、'0002'）。用于在步骤中引用。
+
+**`RecipeIngredient.name`** (`string`, required)
+
+配料的显示名称。对于整个/可数物品，将计数名词包含在此处（如'garlic cloves'、'large eggs'、'medium lemon, zested'）。
+
+**`RecipeIngredient.unit`** (`string | null`, default: `null`)
+
+计量单位。对于整个/可数物品省略（如 3 garlic cloves, 2 lemons），将计数名词放在 `name` 中。对于盐/胡椒/调味料，给出具体的起始量（tsp）而非占位符计数。重量：g, kg, oz, lb。体积：ml, l, tsp, tbsp, cup, fl_oz。
+
+**`RecipeStep`** (`object`)
+
+食谱中的单个步骤。
+
+**`RecipeStep.content`** (`string`, required)
+
+完整的说明文本。使用 {ingredient_id} 内联插入可编辑的配料用量（如'Whisk together {0001} and {0002}'）
+
+**`RecipeStep.id`** (`string`, required)
+
+此步骤的唯一标识符
+
+**`RecipeStep.timer_seconds`** (`integer | null`, default: `null`)
+
+计时器持续时间（秒）。在步骤涉及等待、烹饪、烘烤、静置、腌制、冷藏、煮沸、炖煮或任何基于时间的操作时包含。仅在无需等待的主动手工步骤时省略。
+
+**`RecipeStep.title`** (`string`, required)
+
+步骤的简短摘要（如'Boil pasta'、'Make the sauce'、'Rest the dough'）。用作烹饪模式下的计时器标签和步骤标题。
+
+```yaml
+{
+  "name": "recipe_display_v0",
+  "parameters": {
+    "$defs": {
+      "RecipeIngredient": {
+        "properties": {
+          "amount": {
+            "title": "Amount",
+            "type": "number"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "unit": {
+            "anyOf": [
+              {
+                "enum": [
+                  "g",
+                  "kg",
+                  "ml",
+                  "l",
+                  "tsp",
+                  "tbsp",
+                  "cup",
+                  "fl_oz",
+                  "oz",
+                  "lb",
+                  "pinch"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Unit"
+          }
+        },
+        "required": [
+          "amount",
+          "id",
+          "name"
+        ],
+        "title": "RecipeIngredient",
+        "type": "object"
+      },
+      "RecipeStep": {
+        "properties": {
+          "content": {
+            "title": "Content",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "timer_seconds": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Timer Seconds"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "content",
+          "id",
+          "title"
+        ],
+        "title": "RecipeStep",
+        "type": "object"
+      }
+    },
+    "additionalProperties": false,
+    "properties": {
+      "base_servings": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Base Servings"
+      },
+      "description": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Description"
+      },
+      "ingredients": {
+        "items": {
+          "$ref": "#/$defs/RecipeIngredient"
+        },
+        "title": "Ingredients",
+        "type": "array"
+      },
+      "notes": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Notes"
+      },
+      "steps": {
+        "items": {
+          "$ref": "#/$defs/RecipeStep"
+        },
+        "title": "Steps",
+        "type": "array"
+      },
+      "title": {
+        "title": "Title",
+        "type": "string"
+      }
+    },
+    "required": [
+      "ingredients",
+      "steps",
+      "title"
+    ],
+    "title": "RecipeWidgetParams",
+    "type": "object"
+  }
+}
+```
