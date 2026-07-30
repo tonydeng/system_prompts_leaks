@@ -1,4 +1,4 @@
-> **说明**：本文件为英文原文（`chatgpt-4o-deprecation-preparedness-prompt.md`）的中文译注版，辅助理解。英文原文为权威来源，任何冲突以英文原文为准。
+> **说明**：本文件为英文原文（`chatgpt-4o-deprecation-preparedness-prompt.md`）的中文译注版，辅助理解。英文原文为权威来源，任何冲突以原文为准。占位符（如 `{model_name}`）保持原样不译。
 
 ---
 description: 这些指令曾是 gpt-4o 系统提示词的一部分，出现在该模型于 2026 年 2 月 13 日从 chatgpt.com 弃用前的最后两周

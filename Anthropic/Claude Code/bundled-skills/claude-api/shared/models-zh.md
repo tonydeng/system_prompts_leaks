@@ -1,3 +1,5 @@
+> **说明**：本文件为英文原文（`models.md`）的中文译注版，辅助理解。英文原文为权威来源，任何冲突以原文为准。占位符（如 `{model_name}`）保持原样不译。
+
 # Claude 模型目录
 
 **仅使用本文件中列出的确切模型 ID。** 切勿猜测或构造模型 ID——错误的 ID 会导致 API 错误。在可用处使用别名。获取最新信息，请通过 WebFetch 访问 `shared/live-sources.md` 中的 Models Overview URL，或直接查询 Models API（参见下文"编程式模型发现"）。

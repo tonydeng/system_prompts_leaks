@@ -1,4 +1,4 @@
-> **说明**：本文件为英文原文（`claude-3.7-sonnet.md`）的中文译注版，辅助理解。英文原文为权威来源，任何冲突以英文原文为准。
+> **说明**：本文件为英文原文（`claude-3.7-sonnet.md`）的中文译注版，辅助理解。英文原文为权威来源，任何冲突以原文为准。占位符（如 `{model_name}`）保持原样不译。
 
 <citation_instructions>如果助手的回复基于 web_search、drive_search、google_drive_search 或 google_drive_fetch 工具返回的内容，助手必须始终恰当地为回复添加引用。以下是良好引用的规则：
 

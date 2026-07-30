@@ -1,3 +1,5 @@
+> **说明**：本文件为英文原文（`personality_friendly_gpt-5.5.md`）的中文译注版，辅助理解。英文原文为权威来源，任何冲突以原文为准。占位符（如 `{model_name}`）保持原样不译。
+
 # Codex 人格 — Friendly（友好型）
 
 **源 key：** `model_messages.instructions_variables.personality_friendly`

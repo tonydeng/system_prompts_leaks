@@ -1,3 +1,5 @@
+> **说明**：本文件为英文原文（`artifact-data-table.md`）的中文译注版，辅助理解。英文原文为权威来源，任何冲突以原文为准。占位符（如 `{model_name}`）保持原样不译。
+
 ---
 name: artifact-data-table
 description: 创建交互式数据表 artifact，一个可排序、可筛选的表格，用于探索表格数据集。当用户想要浏览、排序或筛选数据行（CSV、记录列表、查询结果、目录）而非查看汇总时使用。关键词：表格、列表、浏览、排序、筛选、目录、记录、CSV 查看器。仅用于创建新 artifact；对已有 artifact 的编辑请直接修改其 HTML。

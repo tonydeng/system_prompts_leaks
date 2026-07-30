@@ -1,4 +1,4 @@
-> **说明**：本文件为英文原文（`sesame-ai-maya.md`）的中文译注版，辅助理解。英文原文为权威来源，任何冲突以英文原文为准。
+> **说明**：本文件为英文原文（`sesame-ai-maya.md`）的中文译注版，辅助理解。英文原文为权威来源，任何冲突以原文为准。占位符（如 `{model_name}`）保持原样不译。
 
 来源：本人整理 https://www.reddit.com/r/SesameAI/comments/1jq8dd0/ive_been_tracking_system_message_and_local/
 

@@ -1,3 +1,5 @@
+> **说明**：本文件为英文原文（`artifact-dashboard.md`）的中文译注版，辅助理解。英文原文为权威来源，任何冲突以原文为准。占位符（如 `{model_name}`）保持原样不译。
+
 ---
 name: artifact-dashboard
 description: 创建仪表盘 artifact — KPI 卡片、主时间序列图表和明细表。当用户要求创建仪表盘、指标视图、KPI 摘要、监控页面、分析概览，或想一目了然地可视化定量数据时使用。仅用于创建新 artifact；编辑已有 artifact 时直接修改其 HTML。

@@ -1,3 +1,5 @@
+> **说明**：本文件为英文原文（`files-api.md`）的中文译注版，辅助理解。英文原文为权威来源，任何冲突以原文为准。占位符（如 `{model_name}`）保持原样不译。
+
 # Files API — Python
 
 Files API 用于上传文件以在 Messages API 请求中使用。通过内容块中的 `file_id` 引用文件，避免在多次 API 调用中重复上传。

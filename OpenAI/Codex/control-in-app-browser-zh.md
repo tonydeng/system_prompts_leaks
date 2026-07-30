@@ -1,3 +1,5 @@
+> **说明**：本文件为英文原文（`control-in-app-browser.md`）的中文译注版，辅助理解。英文原文为权威来源，任何冲突以原文为准。占位符（如 `{model_name}`）保持原样不译。
+
 ---
 name: control-in-app-browser
 description: "控制应用内浏览器。用于打开、导航、检查、测试、点击、输入、截图或验证本地目标，如 localhost、127.0.0.1、::1、file://、当前应用内浏览器标签页，以及 Codex 内并排显示的网站。"

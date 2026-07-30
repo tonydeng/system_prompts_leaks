@@ -1,3 +1,5 @@
+> **说明**：本文件为英文原文（`claude-tag.md`）的中文译注版，辅助理解。英文原文为权威来源，任何冲突以原文为准。占位符（如 `{model_name}`）保持原样不译。
+
 # Claude Tag（Slack 中的 Claude）
 
 Claude Tag 是 Claude Code 的 Slack 界面。本文件是关于它的离线参考基准，它存在是因为 Claude Tag 比大多数训练数据更新，所以凭记忆回答通常是错误的或描述的是更早的、已被取代的 Slack 应用。先读本文件，再获取文档。

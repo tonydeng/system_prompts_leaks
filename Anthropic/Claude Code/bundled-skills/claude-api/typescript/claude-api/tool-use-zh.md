@@ -1,3 +1,5 @@
+> **说明**：本文件为英文原文（`tool-use.md`）的中文译注版，辅助理解。英文原文为权威来源，任何冲突以原文为准。占位符（如 `{model_name}`）保持原样不译。
+
 # 工具使用 — TypeScript
 
 概念概述（工具定义、工具选择、技巧）请参见 [shared/tool-use-concepts.md](../../shared/tool-use-concepts.md)。

@@ -1,3 +1,5 @@
+> **说明**：本文件为英文原文（`batches.md`）的中文译注版，辅助理解。英文原文为权威来源，任何冲突以原文为准。占位符（如 `{model_name}`）保持原样不译。
+
 # 消息批处理 API — Python
 
 批处理 API（`POST /v1/messages/batches`）以标准价格的 50% 异步处理 Messages API 请求。

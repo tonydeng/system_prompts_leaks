@@ -1,4 +1,4 @@
-> **说明**：本文件为英文原文（`claude-3.7-sonnet-full-system-message-humanreadable.md`）的中文译注版，辅助理解。英文原文为权威来源，任何冲突以原文为准。占位符（如 `{{CURRENTDATE}}`）保持原样不译。
+> **说明**：本文件为英文原文（`claude-3.7-sonnet-full-system-message-humanreadable.md`）的中文译注版，辅助理解。英文原文为权威来源，任何冲突以原文为准。占位符（如 `{model_name}`）保持原样不译。
 
 这是我第一次尝试将 Claude 指令转换为人类可读格式...
 

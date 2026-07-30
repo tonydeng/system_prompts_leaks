@@ -1,4 +1,4 @@
-> **说明**：本文件为英文原文（`managed-agents-self-hosted-sandboxes.md`）的中文译注版，辅助理解。英文原文为权威来源，任何冲突以英文原文为准。
+> **说明**：本文件为英文原文（`managed-agents-self-hosted-sandboxes.md`）的中文译注版，辅助理解。英文原文为权威来源，任何冲突以原文为准。占位符（如 `{model_name}`）保持原样不译。
 
 # Managed Agents — 自托管沙箱
 

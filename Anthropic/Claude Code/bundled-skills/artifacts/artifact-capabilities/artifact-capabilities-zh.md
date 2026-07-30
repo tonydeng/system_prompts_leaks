@@ -1,3 +1,5 @@
+> **说明**：本文件为英文原文（`artifact-capabilities.md`）的中文译注版，辅助理解。英文原文为权威来源，任何冲突以原文为准。占位符（如 `{model_name}`）保持原样不译。
+
 ---
 name: artifact-capabilities
 description: 已发布 Artifact 可声明的运行时能力，包括从页面调用用户的 claude.ai 连接器（MCP）以及未来能力。在将 `capabilities` 传递给 Artifact 工具或编写任何 `window.claude.mcp` 代码之前，请先加载此技能。

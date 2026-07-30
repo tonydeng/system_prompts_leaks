@@ -1,3 +1,5 @@
+> **说明**：本文件为英文原文（`managed-agents-api-reference.md`）的中文译注版，辅助理解。英文原文为权威来源，任何冲突以原文为准。占位符（如 `{model_name}`）保持原样不译。
+
 # Managed Agents — 端点参考
 
 所有端点都需要 `x-api-key` 和 `anthropic-version: 2023-06-01` 头。Managed Agents 端点还需要 `anthropic-beta` 头。
