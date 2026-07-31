@@ -1,75 +1,59 @@
 # HANDOFF — 跨会话交接文档
 
-> 最后更新：2026-07-31 | 会话主题：补全 7 个缺失的 -zh.md 中文镜像翻译
+> 最后更新：2026-07-31 | 会话主题：合并 upstream + 补全 desktop-fable-5 翻译
 
 ## 当前任务
 
-为 `system_prompts_leaks` 仓库补全 7 个缺失的 `-zh.md` 中文镜像翻译。
+合并 upstream/main 到 origin/main，处理 3 个语义影响点，补全新文件中文镜像。
 
-**整体进度**：✅ 全部 7 个翻译已完成、验证通过并提交到 main。5 个 commits 待 push 到 origin。
+**整体进度**：✅ 全部完成并推送到 origin/main。
 
 ## 已完成工作
 
-### 7 个翻译全部完成并提交
+### 7 个翻译补全（早期会话，commits `399b758`-`a4df403`）
+详见 archive/2026-07-31.md。文件：claude-design, claude-fable-5, claude-opus-5, claude-opus-4.6-raw, claude-sonnet-4.6-raw, claude-cowork, codex-full。
 
-| # | 文件 | 大小 | 比率 | Fences | 提交 |
-|---|------|------|------|--------|------|
-| 1 | `Anthropic/claude-design-zh.md` | 191.5KB | 95% | 160/160 | `399b758` |
-| 2 | `Anthropic/claude-fable-5-zh.md` | 209.6KB | 90.9% | 142/142 | `a4df403`（重译） |
-| 3 | `Anthropic/claude-opus-5-zh.md` | 206.4KB | 92.7% | 134/134 | `9fd3ba3`（修复重复 fence） |
-| 4 | `Anthropic/raw/claude-opus-4.6-raw-zh.md` | 161.9KB | 70.8% | 28/28 | `399b758` |
-| 5 | `Anthropic/raw/claude-sonnet-4.6-raw-zh.md` | 164.2KB | 70.7% | 27/27 | `399b758` |
-| 6 | `Anthropic/claude-cowork-zh.md` | 249.7KB | 90.2% | 4/4 | `9fd3ba3` |
-| 7 | `OpenAI/Codex/codex-full-zh.md` | 356.7KB | 98.5% | 492/492 | `9fd3ba3` |
+### Upstream 合并（commit `e043d1b`）
+- `git merge upstream/main` —— 干净合并，无冲突
+- Upstream 4 commits 合入：Latitude 赞助商 banner、删除 `Claude Code/README.md`、新增 `claude-code-desktop-fable-5.md`（303KB）
 
-### 本会话提交
-- `399b758` — 5 个翻译（design, fable-5, opus-5, opus-4.6-raw, sonnet-4.6-raw）
-- `a48bb8d` — merge 5 translations
-- `9fd3ba3` — cowork + codex-full 新增，opus-5 fence 修复
-- `a4df403` — fable-5 重译（并行会话产出，通过验证后提交）
+### 3 个语义影响点处理（commit `a20fd94`）
+- **A. 孤儿 README-zh.md**：删除 `Anthropic/Claude Code/README-zh.md`（跟随 upstream 删除原文）
+- **B. README 赞助商同步**：`README-zh.md` 顶部加 Latitude sponsor banner（与 upstream README.md 一致）
+- **C. 新文件翻译**：`claude-code-desktop-fable-5-zh.md` 翻译完成
+  - 源文件 311.4KB / 7192 行 / 384 fences
+  - 译文 297.4KB / 7196 行 / 384 fences（比率 95.5%）
+  - 拆分策略：Part1 (180KB) + Part2a (64KB) + Part2b (67KB) 3 段并行
+  - Part2 首次超时截断（仅完成 19%），拆成 Part2a+Part2b 重试成功
 
-### 翻译策略
-- **大文件拆分**：>200KB 文件按代码块 fence 边界拆分为多段并行翻译
-  - `claude-cowork.md`（276.9KB）→ 2 段（Part1: 1173行, Part2: 2172行）
-  - `codex-full.md`（362KB, 11104行）→ 4 段（Part1: 2565行, Part2: 2605行, Part3: 2522行, Part4: 3412行）
-- **合并规则**：Part1 加声明头，Part2-4 不加；合并后全量验证
-- **并发限制**：max 2-3 个并行 deep 后台任务
-- **类别选择**：`deep` 类别用于长翻译（`writing` 类别对 >100KB 文件易崩溃 EOF）
-
-### 验证标准（全部通过）
-- 文件存在性 ✓
-- 大小比率 60-130% ✓
-- 声明头存在（产品系统提示词）✓
-- 代码 fence 数量与源文件匹配 ✓
-- 无末行截断 ✓
-- 结构保真度（工具头数量、关键标识符）✓
+### 已推送 commits
+- `e043d1b` — merge upstream/main
+- `a20fd94` — 3 个语义点处理 + desktop-fable-5 翻译
 
 ## 当前约束（活跃限制，非历史经验）
 
 - ⛔ **原文照贴原则**：系统提示词文件必须原样粘贴，禁止摘要/改写/润色。`{model_name}` 等占位符必须保留
 - ⛔ **元文档无声明头规则**：README/CONTRIBUTING/AGENTS/SKILL-zh.md 等元文档不应有声明头；产品系统提示词 `-zh.md` 必须有声明头
 - ⛔ **`.handoff/` 绝不能加入 .gitignore**：按 AGENTS.md 规则须版本控制
-- ⛔ **README 不链接 -zh.md**：README 只链接英文原文，`-zh.md` 镜像在目录中共存即可，无需更新 README
+- ⛔ **大文件翻译拆分阈值**：>150KB 需拆分，>200KB 必须拆分成 <100KB 的段并行翻译（deep 类别，单任务 <100KB 成功率高）
 
 ## 当前卡点
 
-- 无。所有翻译已完成并提交。
+- 无。
 
 ## 下一步计划
 
-1. **Push 到 origin**（优先级：高）：5 个 commits 待推送到 `tonydeng/system_prompts_leaks`（需用户明确授权）
-2. **(可选) 创建 PR 到 upstream**（优先级：低）：向 `asgeirtj/system_prompts_leaks` 提 PR
-3. **清理临时文件**（优先级：低）：`C:\Users\ADMINI~1\AppData\Local\Temp\opencode\` 下的 codex-part*/cowork-part* 文件可删除
+1. **(可选) 创建 PR 到 upstream**（优先级：低）：向 `asgeirtj/system_prompts_leaks` 提 PR 贡献中文翻译
 
 ## 踩坑记录（绝对不要再踩）
 
-- **PowerShell `temp` 变量陷阱**：`temp` 不是有效 cmdlet 名，必须用 `Join-Path $temp` 构建路径，不能写 `(temp 'file.md')`
+- **deep 类别 >130KB 文件超时风险高**：Part2（131.6KB）超时仅完成 19%；拆成 65KB 左右的子部分成功率 100%。阈值：单任务 <100KB
+- **commit-msg hook 格式**：要求 `:emoji: type(scope): subject`；merge commit 默认 message 会被拒绝，需手动指定规范格式
 - **PowerShell CJK 格式串陷阱**：`-f` 格式串中含 CJK 字符会触发 parser error，用纯 ASCII 输出
+- **PowerShell `temp` 变量陷阱**：`temp` 不是有效 cmdlet 名，必须用 `Join-Path $temp` 构建路径
 - **`writing` 类别对长翻译不可靠**：>100KB 文件易崩溃 EOF，改用 `deep` 类别
-- **Agent 路径丢失问题**：后台 agent 上下文压缩后会把文件写到错误位置——必须在 prompt 中显式指定绝对路径
 - **fence 数量验证**：翻译后必须检查 `^\s*`` ` 行数与源文件匹配，可发现重复/遗漏的代码块标记
-- **`container`/`reasoning` 等词的误报**：这些词在 prose 中翻译为中文（容器/推理），在代码块中保留英文——分别统计中英文出现次数可区分
-- **并行会话修改**：另一会话可能修改已提交文件（如 fable-5 被重译），提交前检查 `git status` 和 `git diff`
+- **拆分点选择**：必须在 fence 闭合点拆分（fence count 为偶数处），否则合并后 fence 错位
 
 ## 关键上下文
 
@@ -77,7 +61,7 @@
 - **仓库**：`D:\workspace\github\system_prompts_leaks`
 - **性质**：纯 Markdown 内容仓库，收集 AI 产品系统提示词泄露。无构建/测试/lint/源代码
 - **Git**：`origin`→tonydeng/system_prompts_leaks（fork），`upstream`→asgeirtj/system_prompts_leaks，分支 `main`
-- **Main HEAD**：`a4df403`，clean，5 commits ahead of origin/main
+- **Main HEAD**：`a20fd94`，clean，已与 origin 同步，与 upstream 同步
 - **.gitattributes**：`*.md -whitespace`（.md 空白警告是有意为之，保留原文保真度）
 
 ### 声明头格式（标准）
