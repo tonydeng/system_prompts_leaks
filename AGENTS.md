@@ -126,6 +126,7 @@
 - **LICENSE**：仓库有 LICENSE 文件；泄露的系统提示词版权归各厂商，本仓库为归档目的收录。
 - **Worktree 工作约定**：所有实际开发（翻译、修复、批量生成等）**必须在独立 worktree 中进行**，不直接在 main 工作区操作。
   - **main 保持干净**：main 分支只通过合并 worktree 分支更新，不接受直接提交（紧急小修复除外）。
-  - **worktree 位置与命名**：放在仓库同级目录，命名 `../spl-<task>`，如 `../spl-anthropic-fix`、`../spl-openai-translate`。
-  - **工作流**：`git worktree add ../spl-<task> -b <task>` → 在 worktree 中完成工作并提交 → 切回 main 合并 → `git worktree remove ../spl-<task>`。
+  - **worktree 位置与命名**：放在**仓库内部的 `.worktree/` 目录**下（已加入 `.gitignore`，见下文注意事项），命名 `.worktree/<task>`，如 `.worktree/anthropic-fix`、`.worktree/openai-translate`。**禁止在仓库同级（平级）目录创建 worktree**。
+  - **工作流**：`git worktree add .worktree/<task> -b <task>` → 在 worktree 中完成工作并提交 → 切回 main 合并 → `git worktree remove .worktree/<task>`。
   - **`.handoff/` 同步**：`.handoff/current.md` 已纳入版本控制，worktree 从 main checkout 时自动获取；在 worktree 中更新后合并回 main 即可同步。
+  - **`.worktree/` 必须被 gitignore**：`.worktree/` 目录必须出现在 `.gitignore` 中，否则 git 会尝试追踪嵌套工作树导致索引冲突与递归扫描。新增任何 worktree 前先确认 `.gitignore` 含 `.worktree/` 条目。

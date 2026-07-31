@@ -16,3 +16,6 @@ desktop.ini
 # 临时文件
 *.tmp
 *.bak
+
+# Git worktree 工作目录（在仓库内部创建的 worktree，必须忽略以避免嵌套追踪）
+.worktree/
