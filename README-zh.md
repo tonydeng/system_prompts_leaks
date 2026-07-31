@@ -1,3 +1,22 @@
+<p align="center">
+  <sub>鸣谢</sub>  
+</p>
+
+<p align="center">
+  <a href="https://go.asgeirtj.workers.dev/latitude">
+    <img src="assets/latitude-dark.png" alt="Latitude Logo" width="700"/>
+  </a>
+</p>
+
+<div align="center" markdown="1">
+
+### [让你的 AI 智能体自我修复](https://go.asgeirtj.workers.dev/latitude)  
+[开源 AI 监控](https://go.asgeirtj.workers.dev/latitude)
+
+</div>
+
+---
+
 > **《华盛顿邮报》**基于本仓库的提示词制作了交互式报道：[揭开 AI 背后的隐藏规则，然后用它们重写这篇文章。](https://wapo.st/49t4gSb)（2026 年 5 月 11 日）
 > 
 > **CEPS' AI World** 基于本仓库的文件制作了实时数据看板：[系统提示词及其在对话开始前告诉我们的信息](https://aiworld.eu/story/system-prompts-and-what-they-tell-us-about-the-chat-before-the-chat)（2026 年 7 月 10 日）
